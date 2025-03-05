@@ -13,6 +13,12 @@ import { addCubes}  from './addCubes.js';
 import { addGltf } from './addGltf.js';
 
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+
+// Sizes
+const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight
+}
   
 // Create scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -21,9 +27,24 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0; 
+
 THREE.ColorManagement.enabled = true;
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 document.body.appendChild(renderer.domElement);
+
+window.addEventListener('resize', () =>
+    {
+        // Update sizes
+        sizes.width = window.innerWidth
+        sizes.height = window.innerHeight
+    
+        // Update camera
+        camera.aspect = sizes.width / sizes.height
+        camera.updateProjectionMatrix()
+    
+        // Update renderer
+        renderer.setSize(sizes.width, sizes.height)
+    })
 
 const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
