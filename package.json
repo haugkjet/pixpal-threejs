@@ -1,0 +1,28 @@
+{
+  "name": "pixpal-threejs",
+  "version": "1.0.0",
+  "description": "Imphenzia PixPal Palette Texture support for Threejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haugkjet/pixpal-threejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haugkjet/pixpal-threejs/issues"
+  },
+  "homepage": "https://github.com/haugkjet/pixpal-threejs#readme",
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "three": "^0.174.0",
+    "three-perf": "^1.0.10"
+  }
+}
