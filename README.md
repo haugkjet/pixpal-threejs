@@ -14,9 +14,11 @@ main.js is should be pretty self explanatory but here are the main points:
 1. Copy PixPalMaterial.js into your own project.
 2. Download Pixpal textures to folder of your choice.
 3. Update load paths in PixPalMaterial.js if necessary ("./assets/Textures/" by default)
-        - const texture = loader.load('./assets/Textures/ImphenziaPixPal_BaseColor.png');
-        - const emissiontexture = emissionloader.load('./assets/Textures/ImphenziaPixPal_Emission.png');  
-        - const metalnessRoughnessTexture = roughnessloader.load('./assets/Textures/ImphenziaPixPal_Attributes.png');  
+   ```
+        const texture = loader.load('./assets/Textures/ImphenziaPixPal_BaseColor.png');
+        const emissiontexture = emissionloader.load('./assets/Textures/ImphenziaPixPal_Emission.png');  
+        const metalnessRoughnessTexture = roughnessloader.load('./assets/Textures/ImphenziaPixPal_Attributes.png');  
+   ```
 3. For objects made directly in threejs. Need to adjust uv to single pixel. 
     ```
     import { PixPalMaterial, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
