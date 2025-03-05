@@ -37,8 +37,6 @@ PixPalMaterial.onBeforeCompile = (shader) => {
     // Add custom uniforms
     shader.uniforms.time = { value: 0.0 };
     
-    shader.uniforms.yMin = { value: 0.2 }; // Start of the range
-    shader.uniforms.yMax = { value: 0.8 }; // End of the range
     shader.uniforms.emissiveMap = { value: emissiontexture };
 
 PixPalMaterial.userData.shader = shader; 
@@ -130,8 +128,8 @@ PixPalMaterial.userData.shader = shader;
   );    
   };
 
-  PixPalMaterial.needsUpdate = true
-  metalnessRoughnessTexture.needsUpdate = true
+  //PixPalMaterial.needsUpdate = true
+  //metalnessRoughnessTexture.needsUpdate = true
 
   // When adding objects directly in threejs code, there is no colorpicker 
   // like in blender to set the color (adjust the uv to single pixel)
