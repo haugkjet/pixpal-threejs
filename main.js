@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { ThreePerf } from 'three-perf'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-import { materialAtlas, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
+import { PixPalMaterial, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
 import { addCubes}  from './addCubes.js'; 
 import { addGltf } from './addGltf.js';
 
@@ -40,7 +40,7 @@ camera.position.z = 7;
 camera.position.y = 2;
 
 const geometryPlane = new THREE.PlaneGeometry(20, 20)
-const plane = new THREE.Mesh(geometryPlane, materialAtlas);
+const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
 adjustUVsToSinglePixel(geometryPlane,  49,45); // No colorpicker 
 scene.add(plane);
 plane.rotation.x = -Math.PI/2
@@ -58,8 +58,8 @@ function animate() {
     requestAnimationFrame(animate);
     const elapsedTime = clock.getElapsedTime();
 
-    if (materialAtlas.userData.shader) {
-    materialAtlas.userData.shader.uniforms.time.value = elapsedTime;
+    if (PixPalMaterial.userData.shader) {
+        PixPalMaterial.userData.shader.uniforms.time.value = elapsedTime;
     //console.log("Time value:", elapsedTime); // Add this line for debugging
   }
     renderer.render(scene, camera);

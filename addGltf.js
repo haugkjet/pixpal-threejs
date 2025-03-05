@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { materialAtlas}  from './PixPalMaterial.js'; 
+import { PixPalMaterial}  from './PixPalMaterial.js'; 
 
 function addGltf(scene,positionX,positionY, positionZ, modelname) {
 
@@ -12,7 +12,7 @@ gltfloader.load(
 
         gltf.scene.traverse((child) => {
             if (child.isMesh) {
-              child.material = materialAtlas;
+              child.material = PixPalMaterial;
             }
           });
       // Model loaded successfully

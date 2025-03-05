@@ -20,7 +20,7 @@ metalnessRoughnessTexture.flipY=false;
 metalnessRoughnessTexture.minFilter = THREE.NearestFilter;
 metalnessRoughnessTexture.magFilter = THREE.NearestFilter;
 
-const materialAtlas = new THREE.MeshStandardMaterial({
+const PixPalMaterial = new THREE.MeshStandardMaterial({
     map: texture,
     emissive: 0xffffff,
     emissiveMap: emissiontexture,
@@ -32,8 +32,8 @@ const materialAtlas = new THREE.MeshStandardMaterial({
     metalness: 1.0, // Set to 1 to see full effect of the roughness map
   });  
 
-materialAtlas.onBeforeCompile = (shader) => {
-console.log("onBeforeCompile called");
+PixPalMaterial.onBeforeCompile = (shader) => {
+    //console.log("onBeforeCompile called");
     // Add custom uniforms
     shader.uniforms.time = { value: 0.0 };
     
@@ -41,7 +41,7 @@ console.log("onBeforeCompile called");
     shader.uniforms.yMax = { value: 0.8 }; // End of the range
     shader.uniforms.emissiveMap = { value: emissiontexture };
 
-materialAtlas.userData.shader = shader; 
+PixPalMaterial.userData.shader = shader; 
 
    // Add time uniform and vUv varying
   shader.vertexShader = shader.vertexShader.replace(
@@ -130,7 +130,7 @@ materialAtlas.userData.shader = shader;
   );    
   };
 
-  materialAtlas.needsUpdate = true
+  PixPalMaterial.needsUpdate = true
   metalnessRoughnessTexture.needsUpdate = true
 
   // When adding objects directly in threejs code, there is no colorpicker 
@@ -152,5 +152,5 @@ materialAtlas.userData.shader = shader;
 
   }
   
-  export { materialAtlas , adjustUVsToSinglePixel};
+  export { PixPalMaterial , adjustUVsToSinglePixel};
 
