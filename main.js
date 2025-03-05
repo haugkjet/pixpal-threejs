@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { ThreePerf } from 'three-perf'
+import GUI from 'lil-gui';
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { PixPalMaterial, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
@@ -36,6 +38,38 @@ const perf = new ThreePerf({
     renderer: renderer // three js renderer instance you use for rendering
 });
 
+const gui = new GUI();
+gui.add( document, 'title' );
+
+const params = {
+    showPerf: true,
+    roomenv: true,
+    roombackground: true
+  };
+
+  gui.add(params, 'showPerf').name('Show Performance').onChange((value) => {
+    if (value) {
+      perf.visible = true;
+    } else {
+      perf.visible =false;
+    }
+  });  
+  gui.add(params, 'roomenv').name('Room Env').onChange((value) => {
+    if (value) {
+        scene.environment = roomEnvironmentMap;
+    } else {
+        scene.environment = null
+    }
+  });  
+  gui.add(params, 'roombackground').name('Room Background').onChange((value) => {
+    if (value) {
+        scene.background = roomEnvironmentMap;
+    } else {
+        scene.background = null
+    }
+  });  
+
+
 camera.position.z = 7;
 camera.position.y = 2;
 
@@ -45,6 +79,7 @@ adjustUVsToSinglePixel(geometryPlane,  49,45); // No colorpicker
 scene.add(plane);
 plane.rotation.x = -Math.PI/2
 plane.position.y = 0
+
 
 
 addCubes(scene); // Use pixpal directly in threejs
@@ -62,8 +97,9 @@ function animate() {
         PixPalMaterial.userData.shader.uniforms.time.value = elapsedTime;
     //console.log("Time value:", elapsedTime); // Add this line for debugging
   }
-    renderer.render(scene, camera);
-    perf.end();
+
+  renderer.render(scene, camera);
+  perf.end();
 }
 
 animate();
