@@ -18,19 +18,22 @@ main.js is should be pretty self explanatory but here are the main points:
         - const emissiontexture = emissionloader.load('./assets/Textures/ImphenziaPixPal_Emission.png');  
         - const metalnessRoughnessTexture = roughnessloader.load('./assets/Textures/ImphenziaPixPal_Attributes.png');  
 3. For objects made directly in threejs. Need to adjust uv to single pixel. 
-
+    ```
     import { PixPalMaterial, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
 
     const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
     // No colorpicker, open ImphenziaPixPal_BaseColor.jpg in Gimp or similar to access pixel for desired workflow
     adjustUVsToSinglePixel(geometryPlane,  49,45);
+    ```
 
 4. For objects made in Blender following Imphenzia workflow you just set the Pixpal material directly when loading the model (make sure uv's are exported from Blender).
+    ```
     gltf.scene.traverse((child) => {
             if (child.isMesh) {
               child.material = PixPalMaterial;
             }
           });
+    ```
 
 5. For proper metal and mirror reflection make sure to use cubemap or hdri in your scene.
 
@@ -42,6 +45,8 @@ Todo:
  - For cloud deployment needed to also  place textures also in public folder. Simplify?
 
 Commands for creating the project from scratch:
+    
+    ```
     npm init -y
     npm install vite --save-dev
     npm install three
@@ -51,5 +56,7 @@ Commands for creating the project from scratch:
     package.json
 
     "dev": "vite"
+
+    ```
 
 
