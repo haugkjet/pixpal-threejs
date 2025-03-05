@@ -4,6 +4,10 @@ import GUI from 'lil-gui';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+
 import { PixPalMaterial, adjustUVsToSinglePixel}  from './PixPalMaterial.js'; 
 import { addCubes}  from './addCubes.js'; 
 import { addGltf } from './addGltf.js';
@@ -16,17 +20,63 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1; 
+renderer.toneMappingExposure = 1.0; 
 THREE.ColorManagement.enabled = true;
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 document.body.appendChild(renderer.domElement);
+
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+const bloomparams = {
+    enableBloom: true,
+    bloomStrength: 0.3,
+    bloomRadius: 0.4,
+    bloomThreshold: 0.496
+  };
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.3,
+    0.4,
+    0.496
+  );
+  composer.addPass(bloomPass);
+
+  const gui = new GUI();
+gui.add( document, 'title' );
+
+  
+  gui.add(bloomparams, 'enableBloom').name('Enable Bloom').onChange(toggleBloom);
+  gui.add(bloomparams, 'bloomStrength', 0, 3).onChange(updateBloomPass);
+  gui.add(bloomparams, 'bloomRadius', 0, 1).onChange(updateBloomPass);
+  gui.add(bloomparams, 'bloomThreshold', 0, 1).onChange(updateBloomPass);  
+
+  function toggleBloom(value) {
+    bloomPass.enabled = value;
+  }
+
+  function updateBloomPass() {
+    bloomPass.strength = bloomparams.bloomStrength;
+    bloomPass.radius = bloomparams.bloomRadius;
+    bloomPass.threshold = bloomparams.bloomThreshold;
+  }
+
+  const params = {
+    showPerf: true,
+    roomenv: true,
+    roombackground: false
+  };
+
+
 
 // Create and apply RoomEnvironment
 const pmremGenerator = new THREE.PMREMGenerator(renderer);
 const roomEnvironment = new RoomEnvironment();
 const roomEnvironmentMap = pmremGenerator.fromScene(roomEnvironment).texture;
 scene.environment = roomEnvironmentMap;
-scene.background = roomEnvironmentMap;
+scene.background = params.roombackground;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -38,14 +88,8 @@ const perf = new ThreePerf({
     renderer: renderer // three js renderer instance you use for rendering
 });
 
-const gui = new GUI();
-gui.add( document, 'title' );
 
-const params = {
-    showPerf: true,
-    roomenv: true,
-    roombackground: true
-  };
+
 
   gui.add(params, 'showPerf').name('Show Performance').onChange((value) => {
     if (value) {
@@ -70,8 +114,9 @@ const params = {
   });  
 
 
-camera.position.z = 7;
-camera.position.y = 2;
+camera.position.z = 15;
+camera.position.y = 5;
+camera.position.x = -2;
 
 const geometryPlane = new THREE.PlaneGeometry(20, 20)
 const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
@@ -98,7 +143,8 @@ function animate() {
     //console.log("Time value:", elapsedTime); // Add this line for debugging
   }
 
-  renderer.render(scene, camera);
+  //renderer.render(scene, camera);
+  composer.render();
   perf.end();
 }
 
