@@ -126,38 +126,12 @@ gui.add( document, 'title' );
   const sky = new THREE.Mesh(skyGeo, skyMat);
   scene.add(sky);
 
-  const skyRenderTarget = new THREE.WebGLCubeRenderTarget(1024);
-  const skyCamera = new THREE.CubeCamera(0.1, 1000, skyRenderTarget);
   
-  const skyShader = new THREE.ShaderMaterial({
-    uniforms: {
-      topColor: { value: new THREE.Color(SKY_COLOR) },
-      bottomColor: { value: new THREE.Color(GROUND_COLOR) }
-    },
-    vertexShader: vertexShader,
-    fragmentShader: fragmentShader,
-    side: THREE.BackSide
-  });
-  
-  const skyMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), skyShader);
-
-  function updateSky() {
-    skyMesh.visible = true;
-    skyCamera.update(renderer, scene);
-    skyMesh.visible = false;
-  }
-
-  scene.environment = skyRenderTarget.texture;
-
-
-
-
 // Create and apply RoomEnvironment
 const pmremGenerator = new THREE.PMREMGenerator(renderer);
 const roomEnvironment = new RoomEnvironment();
 const roomEnvironmentMap = pmremGenerator.fromScene(roomEnvironment).texture;
 scene.environment = roomEnvironmentMap;
-scene.background = params.roombackground;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -184,13 +158,6 @@ const perf = new ThreePerf({
         scene.environment = roomEnvironmentMap;
     } else {
         scene.environment = null
-    }
-  });  
-  gui.add(params, 'roombackground').name('Room Background').onChange((value) => {
-    if (value) {
-        scene.background = roomEnvironmentMap;
-    } else {
-        scene.background = null
     }
   });  
 
