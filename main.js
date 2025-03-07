@@ -140,7 +140,7 @@ controls.target.set(0, 0, 0); // Or your desired look-at point
 controls.update();
 
 
-camera.position.set(0, 10, 20);
+camera.position.set(-15, 10, 15);
 camera.lookAt(0,0,0);
 
 // Initialize three-perf
