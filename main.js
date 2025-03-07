@@ -14,7 +14,7 @@ import { addGltf } from './addGltf.js';
 
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
-import { ShaderMaterial, Vector2, Vector3 } from "three";
+import { ShaderMaterial} from "three";
 
 // Sizes
 const sizes = {
@@ -68,8 +68,9 @@ const bloomPass = new UnrealBloomPass(
   );
   composer.addPass(bloomPass);
 
-  const gui = new GUI();
+  const gui = new GUI( {closeFolders: true});
 gui.add( document, 'title' );
+
 
   
   gui.add(bloomparams, 'enableBloom').name('Enable Bloom').onChange(toggleBloom);
@@ -88,7 +89,7 @@ gui.add( document, 'title' );
   }
 
   const params = {
-    showPerf: true,
+    visible: false,
     roomenv: true,
     roombackground: false
   };
@@ -140,13 +141,12 @@ const perf = new ThreePerf({
     anchorX: 'left',
     anchorY: 'top',
     domElement: document.body, // or other canvas rendering wrapper
-    renderer: renderer // three js renderer instance you use for rendering
+    renderer: renderer, // three js renderer instance you use for rendering
+
 });
+perf.visible =false;
 
-
-
-
-  gui.add(params, 'showPerf').name('Show Performance').onChange((value) => {
+  gui.add(params, 'visible').name('Show Performance').onChange((value) => {
     if (value) {
       perf.visible = true;
     } else {
