@@ -162,21 +162,21 @@ const perf = new ThreePerf({
   });  
 
 
-camera.position.z = 15;
+camera.position.z = 20;
 camera.position.y = 5;
-camera.position.x = -2;
+camera.position.x = 4
 
-const geometryPlane = new THREE.PlaneGeometry(20, 20)
-const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
-adjustUVsToSinglePixel(geometryPlane,  49,35); // No colorpicker 
-scene.add(plane);
-plane.rotation.x = -Math.PI/2
-plane.position.y = 0
+//const geometryPlane = new THREE.PlaneGeometry(20, 20)
+//const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
+//adjustUVsToSinglePixel(geometryPlane,  49,35); // No colorpicker 
+//scene.add(plane);
+//plane.rotation.x = -Math.PI/2
+//plane.position.y = 0
 
 
 
-addCubes(scene); // Use pixpal directly in threejs
-addGltf (scene, 0,0,-5,'./assets/madeinblender.glb')
+//addCubes(scene); // Use pixpal directly in threejs
+addGltf (scene, 0,0,0,'./assets/madeinblender.glb')
 
 //addGltf (scene, 0,0,0,'./assets/Imphenzia-PixPal.glb')
 
