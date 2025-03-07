@@ -136,6 +136,13 @@ scene.environment = roomEnvironmentMap;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+controls.target.set(0, 0, 0); // Or your desired look-at point  
+controls.update();
+
+
+camera.position.set(0, 10, 20);
+camera.lookAt(0,0,0);
+
 // Initialize three-perf
 const perf = new ThreePerf({
     anchorX: 'left',
@@ -162,9 +169,6 @@ perf.visible =false;
   });  
 
 
-camera.position.z = 20;
-camera.position.y = 5;
-camera.position.x = 4
 
 //const geometryPlane = new THREE.PlaneGeometry(20, 20)
 //const plane = new THREE.Mesh(geometryPlane, PixPalMaterial);
